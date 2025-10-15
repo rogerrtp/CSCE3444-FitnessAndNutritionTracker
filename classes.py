@@ -1,23 +1,12 @@
-from sqlalchemy.orm import (
-    DeclarativeBase,
-    Mapped,
-    mapped_column,
-    relationship,
-    declared_attr
-)
-from sqlalchemy import (
-ForeignKey,
-String,
-Integer,
-DateTime,
-func
-)
-from typing import List, Optional
 from datetime import datetime
+
+from sqlalchemy import (ForeignKey, String, Integer, DateTime, func)
+from sqlalchemy.orm import (DeclarativeBase, Mapped, mapped_column, relationship, declared_attr)
 
 
 class Base(DeclarativeBase):
     pass
+
 
 class User(Base):
     __tablename__ = "users"
