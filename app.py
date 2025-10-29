@@ -2,11 +2,25 @@ from flask import Flask, render_template, request
 from database import engine
 from classes import User
 from sqlalchemy.orm import Session
+import bcrypt
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def hello_world():
-    return "<p>Hello, World!</p>"
+    if request.method == 'GET':
+        return render_template("home.html")
+
+    elif request.method == 'POST':
+        username = request.form['email']
+        pwd = request.form['password'].encode()
+
+        with Session(engine) as session:
+            dbInfo = session.query(User).filter(User.username == username).first()
+
+            if dbInfo and bcrypt.checkpw(pwd, dbInfo.password.encode()):
+                return 'OK'
+            else:
+                return 'Bad login'
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -15,13 +29,15 @@ def register_user():
         return render_template('register.html')
     elif request.method == 'POST':
         with Session(engine) as session:
+            salt = bcrypt.gensalt()
             newUser = User(
                 firstName=request.form['fname'],
                 lastName=request.form['lname'],
                 username=request.form['email'],
-                password=request.form['password'],
+                password=bcrypt.hashpw(request.form['password'].encode(), salt).decode(),
                 isActive=True
             )
+            # bcrypt.checkpw(userBytes, dbUser.hashed_password.encode()) to validate pwd for login
 
             session.add(newUser)
             session.commit()
