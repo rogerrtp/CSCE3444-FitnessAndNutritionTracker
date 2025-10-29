@@ -12,16 +12,16 @@ class User(Base):
     __tablename__ = "users"
 
     userID: Mapped[int] = mapped_column(primary_key=True)
-    username: Mapped[str] = mapped_column(String(255))
+    username: Mapped[str] = mapped_column(String(255), unique=True)
     firstName: Mapped[str] = mapped_column(String(255))
     lastName: Mapped[str] = mapped_column(String(255))
     password: Mapped[str] = mapped_column(String(255))  # TODO: hash password
-    is_active: Mapped[bool] = mapped_column(default=True)
+    isActive: Mapped[bool] = mapped_column(default=True)
     createDt: Mapped[datetime] = mapped_column(DateTime, insert_default=func.now())
     lastLoginDt: Mapped[datetime] = mapped_column(DateTime, insert_default=func.now())
 
     def __repr__(self):
-        return f"<User(userID={self.userID}, username={self.name}, email={self.email})>"
+        return f"<User(userID={self.userID}, id={self.userID}, username={self.username})>"
 
 
 class LogEntryBase:

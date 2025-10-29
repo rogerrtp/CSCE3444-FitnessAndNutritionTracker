@@ -17,4 +17,4 @@ Activate with: source .venv/bin/activate.fish
 
 # How to run
 From within the project directory:
-`uv run main.py` to run application
+`uv run flask --app app run --debug` to run application
