@@ -11,11 +11,11 @@ def hello_world():
         return render_template("home.html")
 
     elif request.method == 'POST':
-        username = request.form['email']
+        email = request.form['email']
         pwd = request.form['password'].encode()
 
         with Session(engine) as session:
-            dbInfo = session.query(User).filter(User.username == username).first()
+            dbInfo = session.query(User).filter(User.email == email).first()
 
             if dbInfo and bcrypt.checkpw(pwd, dbInfo.password.encode()):
                 return 'OK'
@@ -33,7 +33,7 @@ def register_user():
             newUser = User(
                 firstName=request.form['fname'],
                 lastName=request.form['lname'],
-                username=request.form['email'],
+                email=request.form['email'],
                 password=bcrypt.hashpw(request.form['password'].encode(), salt).decode(),
                 isActive=True
             )
