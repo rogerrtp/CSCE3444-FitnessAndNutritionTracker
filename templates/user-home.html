@@ -1,14 +1,68 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <title>{{email}}</title>
 </head>
 <body>
+{% include 'sidebar.html' %}
+<div class="content">
+
     <h1>Welcome, {{firstName}}</h1>
 
-<a href="/meals">Meals</a><br>
-<a href="/excercises">Exercised</a><br>
-<a href="/weight">Weight</a><br>
-<a href="/logout">Logout</a><br>
+    <h2>Today's&nbsp;Activity</h2>
+    <div class="box">
+
+        <div class="sub-box">
+            Meals: <br>
+            {{totalCaloriesInDay}}&nbsp;calories&nbsp;eaten
+
+            <br>
+            <a href="/meals">Add&nbsp;a&nbsp;Meal</a>
+        </div>
+        <div class="sub-box">
+            Exercise: <br>
+            {{totalExerciseDurationDay / 60}}&nbsp;minutes
+
+            <br>
+            <a href="/meals">Add&nbsp;a&nbsp;Meal</a>
+        </div>
+        <div class="sub-box">
+            Weight: <br>
+            {{latestWeightDay}}lbs
+
+            <br>
+            <a href="/meals">Add&nbsp;a&nbsp;Meal</a>
+        </div>
+    </div>
+
+    <h2>This&nbsp;Week's&nbsp;Activity</h2><br>
+    <div class="box">
+        <div class="sub-box">
+            Meals: <br>
+            {{totalCaloriesInWeek}}&nbsp;calories&nbsp;eaten
+
+            <br>
+            <a href="/meals">Add&nbsp;a&nbsp;Meal</a>
+        </div>
+        <div class="sub-box">
+            Exercise: <br>
+            {{totalExerciseDurationWeek / 60}}&nbsp;minutes
+
+            <br>
+            <a href="/meals">Add&nbsp;a&nbsp;Meal</a>
+        </div>
+        <div class="sub-box">
+            Weight: <br>
+            {{latestWeightWeek}}lbs
+
+            <br>
+            <a href="/meals">Add&nbsp;a&nbsp;Meal</a>
+        </div>
+    </div>
+</div>
 
 
 </body>

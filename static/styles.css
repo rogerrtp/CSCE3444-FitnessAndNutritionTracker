@@ -1,0 +1,79 @@
+body {
+    background-color: #F5F1ED;
+    color: #252323;
+    font-family: 'Inter', sans-serif;
+    align-content: center;
+}
+
+div.box {
+    background-color: #F5F1ED;
+    border-radius: 10px;
+    border-color: #70798C;
+    border-style: solid;
+    margin: 20px;
+    padding: 10px;
+    width: fit-content;
+    display: flex;
+    align-self: center;
+}
+
+div.sub-box {
+    background-color: #F5F1ED;
+    border-radius: 10px;
+    border-color: #70798C;
+    border-style: solid;
+    margin: 20px;
+    padding: 10px;
+    width: 20%;
+    display: inline-block;
+    line-height: 1.5;
+
+}
+
+div.sidebar {
+    background-color: #DAD2BC;
+    width: 5%;
+    height: 100%;
+    position: fixed;
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+    padding-top: 5%;
+}
+
+div.content {
+    margin-left: 5%;
+    padding: 1px 16px;
+    height: 100%;
+    align-content: center;
+}
+
+a {
+    color: #252323;
+    background-color: #F4F1ED;
+    display: block;
+    margin-inside: 15px;
+    margin-outside: 20px;
+    align-content: center;
+    text-align: center;
+    padding: 10px;
+    border-style: solid;
+    border-radius: 10px;
+    border-color: #70798C;
+    text-decoration: none;
+
+}
+
+a.sidebarbutton {
+    color: #252323;
+    background-color: #F5F1ED;
+    display: block;
+    padding: 20px;
+    align-content: center;
+    text-align: center;
+    border-style: solid;
+    border-radius: 10px;
+    border-color: #70798C;
+    text-decoration: none;
+    width: stretch;
+}

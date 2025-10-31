@@ -74,7 +74,25 @@ def register_user():
 @app.route("/userhome", methods=['GET', 'POST'])
 @login_required
 def user_home():
-    return render_template('user-home.html', email=current_user.email, firstName=current_user.firstName)
+    with Session(engine) as session:
+        thisUser = session.query(User).filter(User.email == current_user.email).first()
+        totalCaloriesInDay = thisUser.getCaloriesInToday()
+        totalExerciseDurationDay = thisUser.getExerciseDurationToday()
+        latestWeightDay = thisUser.getWeightToday()
+
+        totalCaloriesInWeek = thisUser.getCaloriesInWeek()
+        totalExerciseDurationWeek = thisUser.getExerciseDurationWeek()
+        latestWeightWeek = thisUser.getWeightWeek()
+        return render_template('user-home.html',
+                               email=current_user.email,
+                               firstName=current_user.firstName,
+                               totalCaloriesInDay=totalCaloriesInDay,
+                               totalExerciseDurationDay=totalExerciseDurationDay,
+                               latestWeightDay=latestWeightDay,
+                               totalCaloriesInWeek=totalCaloriesInWeek,
+                               totalExerciseDurationWeek=totalExerciseDurationWeek,
+                               latestWeightWeek=latestWeightWeek
+                               )
 
 @app.route("/logout")
 @login_required
