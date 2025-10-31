@@ -1,9 +1,9 @@
 from datetime import datetime
 
+import bcrypt
 from sqlalchemy import (ForeignKey, String, Integer, DateTime, func)
 from sqlalchemy.orm import (DeclarativeBase, Mapped, mapped_column, relationship, declared_attr)
 
-import bcrypt
 
 class Base(DeclarativeBase):
     pass
@@ -23,7 +23,6 @@ class User(Base):
 
     def __repr__(self):
         return f"<User(userID={self.userID}, id={self.userID}, email={self.email})>"
-
 
     def getUserID(self):
         return self.userID
@@ -62,7 +61,6 @@ class User(Base):
         self.lastLoginDt = lastLoginDt
         return self.getLastLoginDt()
 
-
     def setPassword(self, password):
         salt = bcrypt.gensalt()
         self.password = bcrypt.hashpw(password.encode(), salt).decode()
@@ -78,7 +76,6 @@ class LogEntryBase:
     @declared_attr
     def user(cls) -> Mapped["User"]:
         return relationship("User")
-
 
     def getEntryDt(self):
         return self.entryDt
@@ -96,7 +93,6 @@ class LogEntryBase:
     def setModifiedDt(self, modifiedDt):
         self.modifiedDt = modifiedDt
         return self.getModifiedDt()
-
 
     # These will need to be implemented by subclasses
     def hasNextEntry(self):

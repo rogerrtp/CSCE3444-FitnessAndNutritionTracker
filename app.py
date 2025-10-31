@@ -1,9 +1,12 @@
-from flask import Flask, render_template, request
-from database import engine
-from classes import User
-from sqlalchemy.orm import Session
 import bcrypt
+from flask import Flask, render_template, request
+from sqlalchemy.orm import Session
+
+from classes import User
+from database import engine
+
 app = Flask(__name__)
+
 
 @app.route("/", methods=['GET', 'POST'])
 def hello_world():
@@ -30,8 +33,7 @@ def register_user():
     elif request.method == 'POST':
         with Session(engine) as session:
             salt = bcrypt.gensalt()
-            newUser = User(
-                firstName=request.form['fname'],
+            newUser = User(firstName=request.form['fname'],
                 lastName=request.form['lname'],
                 email=request.form['email'],
                 password=bcrypt.hashpw(request.form['password'].encode(), salt).decode(),
