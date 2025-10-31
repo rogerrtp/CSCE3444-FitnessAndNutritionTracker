@@ -1,23 +1,25 @@
 from datetime import datetime
-
+from database import engine
 import bcrypt
 from sqlalchemy import (ForeignKey, String, Integer, DateTime, func)
 from sqlalchemy.orm import (DeclarativeBase, Mapped, mapped_column, relationship, declared_attr)
-
+from flask_login import UserMixin
 
 class Base(DeclarativeBase):
     pass
 
+#  Base.metadata.drop_all(engine)
+Base.metadata.create_all(engine)
 
-class User(Base):
+class User(UserMixin, Base):
     __tablename__ = "users"
 
     userID: Mapped[int] = mapped_column(primary_key=True)
-    email: Mapped[str] = mapped_column(String(255), unique=True, immutable=True)
+    email: Mapped[str] = mapped_column(String(255), unique=True)
     firstName: Mapped[str] = mapped_column(String(255))
     lastName: Mapped[str] = mapped_column(String(255))
     password: Mapped[str] = mapped_column(String(255))  # TODO: hash password
-    isActive: Mapped[bool] = mapped_column(default=True)
+    is_active: Mapped[bool] = mapped_column(default=True)  # For Flask-Login
     createDt: Mapped[datetime] = mapped_column(DateTime, insert_default=func.now())
     lastLoginDt: Mapped[datetime] = mapped_column(DateTime, insert_default=func.now())
 
@@ -26,6 +28,9 @@ class User(Base):
 
     def getUserID(self):
         return self.userID
+
+    def get_id(self):
+        return self.getUserID()
 
     def getEmail(self):
         return self.email
@@ -44,12 +49,12 @@ class User(Base):
         self.lastName = lastName
         return self.getLastName()
 
-    def getIsActive(self):
-        return self.isActive
+    def getis_active(self):
+        return self.is_active
 
-    def setIsActive(self, isActive):
-        self.isActive = isActive
-        return self.getIsActive()
+    def setis_active(self, is_active):
+        self.is_active = is_active
+        return self.getis_active()
 
     def getCreateDt(self):
         return self.createDt
@@ -146,6 +151,7 @@ class MealLogEntry(LogEntryBase, Base):
 
 
 class ExerciseLogEntry(LogEntryBase, Base):
+    __tablename__ = "exercise_log_entries"
     exerciseLogID: Mapped[int] = mapped_column(primary_key=True)
     durationSeconds: Mapped[int] = mapped_column(Integer)
     cardioOrStrength: Mapped[str] = mapped_column(String(1))  # C = cardio, S = strength
@@ -169,6 +175,7 @@ class ExerciseLogEntry(LogEntryBase, Base):
 
 
 class WeightLogEntry(LogEntryBase, Base):
+    __tablename__ = "weight_log_entries"
     weightLogID: Mapped[int] = mapped_column(primary_key=True)
     weightLbs: Mapped[int] = mapped_column(Integer)
 

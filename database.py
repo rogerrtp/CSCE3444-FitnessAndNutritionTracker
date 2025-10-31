@@ -1,3 +1,4 @@
 from sqlalchemy import create_engine
 
-engine = create_engine('sqlite+pysqlite:///3444.db')
+dbURI = 'sqlite+pysqlite:///3444.db'
+engine = create_engine(dbURI)
