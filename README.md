@@ -13,7 +13,13 @@ It with print the command to use to activate the new environment once it's creat
 Activate with: source .venv/bin/activate.fish
 ```
 
-
+# Prep DB
+```
+uv run python3
+from database import engine
+from classes import Base
+Base.metadata.create_all(engine)
+```
 
 # How to run
 From within the project directory:

@@ -85,13 +85,13 @@ class User(UserMixin, Base):
 
     def getCaloriesInToday(self):
         calories = sum(
-            [meal.calories for meal in self.meals if meal.entryDt.date() == datetime.today().date()]
+            [int(meal.calories) for meal in self.meals if meal.entryDt.date() == datetime.today().date()]
         )
         return calories
 
     def getCaloriesInWeek(self):
         calories = sum(
-            [meal.calories for meal in self.meals if
+            [int(meal.calories) for meal in self.meals if
              datetime.today().date() - timedelta(days=7) <= meal.entryDt.date() <= datetime.today().date()]
         )
         return calories
@@ -171,14 +171,14 @@ class User(UserMixin, Base):
 class MealLogEntry(Base):
     __tablename__ = "meal_log_entries"
     mealLogID: Mapped[int] = mapped_column(primary_key=True)
-    calories: Mapped[int] = mapped_column(String(255))
-    proteinGrams: Mapped[int] = mapped_column(Integer)
-    carbsGrams: Mapped[int] = mapped_column(Integer)
-    fatsGrams: Mapped[int] = mapped_column(Integer)
-    createDt: Mapped[datetime] = mapped_column(DateTime, insert_default=func.now())
-    entryDt: Mapped[datetime] = mapped_column(DateTime)
-    modifiedDt: Mapped[datetime] = mapped_column(DateTime)
-    userID: Mapped[int] = mapped_column(ForeignKey("users.userID"))
+    calories: Mapped[int] = mapped_column(String(255), nullable=False)
+    proteinGrams: Mapped[int] = mapped_column(Integer, nullable=True)
+    carbsGrams: Mapped[int] = mapped_column(Integer, nullable=True)
+    fatsGrams: Mapped[int] = mapped_column(Integer, nullable=True)
+    createDt: Mapped[datetime] = mapped_column(DateTime, insert_default=func.now(), nullable=False)
+    entryDt: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    modifiedDt: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    userID: Mapped[int] = mapped_column(ForeignKey("users.userID"), nullable=False)
     user: Mapped["User"] = relationship(back_populates="meals")
 
 
@@ -248,12 +248,13 @@ class MealLogEntry(Base):
 class ExerciseLogEntry(Base):
     __tablename__ = "exercise_log_entries"
     exerciseLogID: Mapped[int] = mapped_column(primary_key=True)
-    durationSeconds: Mapped[int] = mapped_column(Integer)
-    cardioOrStrength: Mapped[str] = mapped_column(String(1))  # C = cardio, S = strength
-    createDt: Mapped[datetime] = mapped_column(DateTime, insert_default=func.now())
-    entryDt: Mapped[datetime] = mapped_column(DateTime)
-    modifiedDt: Mapped[datetime] = mapped_column(DateTime)
-    userID: Mapped[int] = mapped_column(ForeignKey("users.userID"))
+    durationSeconds: Mapped[int] = mapped_column(Integer, nullable=False)
+    cardioOrStrength: Mapped[str] = mapped_column(String(1), nullable=False)  # C = cardio, S = strength
+    avgHeartRateBpm: Mapped[int] = mapped_column(Integer, nullable=True)
+    createDt: Mapped[datetime] = mapped_column(DateTime, insert_default=func.now(), nullable=False)
+    entryDt: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    modifiedDt: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    userID: Mapped[int] = mapped_column(ForeignKey("users.userID"), nullable=False)
     user: Mapped["User"] = relationship(back_populates="exercises")
 
 
@@ -309,11 +310,11 @@ class ExerciseLogEntry(Base):
 class WeightLogEntry(Base):
     __tablename__ = "weight_log_entries"
     weightLogID: Mapped[int] = mapped_column(primary_key=True)
-    weightLbs: Mapped[int] = mapped_column(Integer)
+    weightLbs: Mapped[int] = mapped_column(Integer, nullable=False)
     createDt: Mapped[datetime] = mapped_column(DateTime, insert_default=func.now())
-    entryDt: Mapped[datetime] = mapped_column(DateTime)
-    modifiedDt: Mapped[datetime] = mapped_column(DateTime)
-    userID: Mapped[int] = mapped_column(ForeignKey("users.userID"))
+    entryDt: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    modifiedDt: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    userID: Mapped[int] = mapped_column(ForeignKey("users.userID"), nullable=False)
     user: Mapped["User"] = relationship(back_populates="weights")
 
 

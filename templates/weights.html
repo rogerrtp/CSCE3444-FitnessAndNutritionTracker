@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Exercise and Nutrition Tracker - Weight History</title>
+</head>
+<body>
+{% include 'sidebar.html' %}
+<div class="content">
+
+    <h1>Weight History</h1>
+    <div class="chart-container">
+        <canvas id="myChart"></canvas>
+    </div>
+
+
+    <table>
+        <tr>
+            {% for heading in headers %}
+            <th>{{heading}}</th>
+            {% endfor %}
+        </tr>
+
+
+        {% for row in rows %}
+        <tr>
+            {% for field in row %}
+            <td>{{field}}</td>
+            {% endfor %}
+            <td>TODO</td>
+            <td>TODO</td>
+        </tr>
+        {% endfor %}
+
+
+    </table>
+
+    <a style="width:120px" href="/meal">Add a Meal</a>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {{ graphLabels|safe }},
+            datasets: [{
+                label: 'Weight Lbs.',
+                data: {{ graphData|safe }},
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+
+
+</html>
