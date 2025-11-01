@@ -23,4 +23,4 @@ Base.metadata.create_all(engine)
 
 # How to run
 From within the project directory:
-`uv run flask --app app run --debug` to run application
+`SECRET_KEY="some_really_secret_key" uv run flask --app app run --debug` to run application
