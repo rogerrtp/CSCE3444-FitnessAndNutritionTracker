@@ -3,7 +3,7 @@
 Fitness and Nutrition Tracker for CSCE3444 - Fall 2025
 
 # External Depencies
-uv
+uv https://docs.astral.sh/uv/getting-started/installation/
 
 # Installation
 From within the project directory:
