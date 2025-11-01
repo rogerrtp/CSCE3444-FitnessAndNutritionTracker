@@ -111,16 +111,24 @@ class User(UserMixin, Base):
         return duration
 
     def getWeightToday(self):
-        weight = mean(
-            [weight.weightLbs for weight in self.weights if weight.entryDt.date() == datetime.today().date()]
-        ) if len(self.weights) > 0 else 0
+        todaysWeights = [weight for weight in self.weights if weight.entryDt.date() == datetime.today().date()]
+        if len(todaysWeights) > 0:
+            weight = mean(
+                [weight.weightLbs for weight in todaysWeights]
+            )
+        else:
+            weight = 0
         return weight
 
     def getWeightWeek(self):
-        weight = mean(
-            [weight.weightLbs for weight in self.weights if
-             datetime.today().date() - timedelta(days=7) <= weight.entryDt.date() <= datetime.today().date()]
-        ) if len(self.weights) > 0 else 0
+        weeksWeights = [weight for weight in self.weights if
+                 datetime.today().date() - timedelta(days=7) <= weight.entryDt.date() <= datetime.today().date()]
+        if len(weeksWeights) > 0:
+            weight = mean(
+                [weight.weightLbs for weight in weeksWeights]
+            )
+        else:
+            weight = 0
         return weight
 
 
