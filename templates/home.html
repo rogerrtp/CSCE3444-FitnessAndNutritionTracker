@@ -7,16 +7,25 @@
     <Title>Fitness and Nutrition App</Title>
 </head>
 <body>
-<form method="POST" action="/">
-    <label for="email">Email Address:</label><br>
-    <input type="text" id="email" name="email" required><br>
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" name="password" required><br>
-    <input type="submit" value="Login">
-</form>
+<h1 style="text-align: center; margin:0 auto; width: 50%; height: 100%;">Fitness and Nutrition App</h1>
 <br>
 <br>
-New User?
-<button><a href="/register">Register</a></button>
+<div style="text-align: center; margin:0 auto; width: 50%; height: 100%;">
+<div class="box" style="margin: 0 auto; top: 50%; bottom: 50%;">
+    <form method="POST" action="/" style="line-height: 1.5; margin: 5px;">
+        <label for="email">Email Address:</label><br>
+        <input type="text" id="email" name="email" required><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br>
+        <input type="submit" value="Login" style="margin-top: 10px; width: 80px; text-align: center; position: relative; left: 60%;">
+    </form>
+    <br>
+    <br>
+    <div style="flex: none; margin-left: 20px;">
+    New User?<br>
+    <button><a href="/register">Register</a></button>
+        </div>
+</div>
+    </div>
 </body>
 </html>
