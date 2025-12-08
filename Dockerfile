@@ -1,7 +1,7 @@
 FROM python:3.13-trixie
 
 RUN apt-get update
-RUN apt-get upgrade
+RUN apt-get upgrade -y
 RUN pip install uv
 
 COPY . .

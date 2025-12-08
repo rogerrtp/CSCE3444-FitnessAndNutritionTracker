@@ -48,17 +48,18 @@ div.sub-box {
 
 div.sidebar {
     background-color: #DAD2BC;
-    width: 5%;
+    width: fit-content;
     height: 100%;
     position: fixed;
     overflow: auto;
     margin: 0;
-    padding: 0;
-    padding-top: 5%;
+    padding-top: 8%;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 div.content {
-    margin-left: 5%;
+    margin-left: 8%;
     padding: 1px 16px;
     height: 100%;
     align-content: center;
@@ -91,7 +92,7 @@ a.sidebarbutton {
     border-radius: 10px;
     border-color: #70798C;
     text-decoration: none;
-    width: stretch;
+    width: 60%;
 }
 
 div.chart-container {
