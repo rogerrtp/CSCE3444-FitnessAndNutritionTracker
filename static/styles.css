@@ -103,6 +103,7 @@ div.chart-container {
     align-self: center;
 }
 
+
 table {
     border-collapse: collapse;
     border-style: none;
@@ -137,4 +138,13 @@ td, th {
 form {
     display: flex;
     flex-direction: column;
+}
+
+label.input {
+    width: 50px;
+    display: inline-block;
+}
+
+input {
+    margin: 5px;
 }
