@@ -48,9 +48,17 @@
 
 
 </div>
+<script type="text/javascript">
+    var now = new Date();
+    var nowHour = now.getHours();
+    var nowMinute = now.getMinutes();
+    var timeString = nowHour + ":" + nowMinute;
+    const timeControl = document.querySelector('input[type="time"]');
+    timeControl.value = timeString;
 
+    document.getElementById('date').valueAsDate = now;
+
+</script>
 
 </body>
-
-
 </html>

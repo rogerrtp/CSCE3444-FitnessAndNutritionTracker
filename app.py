@@ -109,26 +109,36 @@ def meals():
     if request.method == 'GET':
         with Session(engine) as session:
             meals = session.query(MealLogEntry).filter(MealLogEntry.userID==current_user.userID).order_by(MealLogEntry.entryDt.asc()).all()
-            print(current_user.userID)
-            print(len(meals))
-            headers = ["Date", "Time", "Calories", "Modify", "Delete"]
+            headers = ["Date", "Time", "Calories"]
 
             graphLabels = '[' + ', '.join(["'" + str(m.entryDt) + "'" for m in meals]) + ']'
-            print(graphLabels)
             graphData = '[' + ', '.join([str(m.calories) for m in meals]) + ']'
-            print(graphData)
             rows = [
                 [str(datetime.date(m.entryDt)), str(datetime.time(m.entryDt)), m.calories] for m in meals
             ]
-            print(rows)
         return render_template("meals.html", headers=headers, rows=rows,
                                graphLabels=graphLabels, graphData=graphData)
     else:
         raise Exception("Invalid request method")
 
-@app.route("/meal", methods=['GET', "POST", "PATCH", "DELETE"])
+# @app.route("/meal/<int:mealLogID>", methods=['DELETE'])
+# @login_required
+# def meal(mealLogID: int):
+#     if request.method == 'DELETE':
+#         with Session(engine) as session:
+#             meal = session.query(MealLogEntry).get(mealLogID)
+#             session.delete(meal)
+#             session.commit()
+#
+#
+#
+#         return redirect(url_for('meals'))
+#     else:
+#         raise Exception("Invalid request method")
+
+@app.route("/add_meal", methods=['GET', "POST"])
 @login_required
-def meal():
+def add_meal():
     if request.method == 'GET':
         return render_template('add_meal.html')
     if request.method == 'POST':
@@ -155,26 +165,37 @@ def weights():
     if request.method == 'GET':
         with Session(engine) as session:
             weights = session.query(WeightLogEntry).filter(WeightLogEntry.userID==current_user.userID).order_by(WeightLogEntry.entryDt.asc()).all()
-            print(current_user.userID)
-            print(len(weights))
-            headers = ["Date", "Time", "Weight", "Modify", "Delete"]
+            headers = ["Date", "Time", "Weight"]
 
             graphLabels = '[' + ', '.join(["'" + str(m.entryDt) + "'" for m in weights]) + ']'
-            print(graphLabels)
             graphData = '[' + ', '.join([str(m.weightLbs) for m in weights]) + ']'
-            print(graphData)
             rows = [
-                [str(datetime.date(m.entryDt)), str(datetime.time(m.entryDt)), m.weightLbs] for m in weights
+                [str(datetime.date(m.entryDt)),
+                 str(datetime.time(m.entryDt)),
+                 m.weightLbs] for m in weights
             ]
-            print(rows)
         return render_template("weights.html", headers=headers, rows=rows,
                                graphLabels=graphLabels, graphData=graphData)
     else:
         raise Exception("Invalid request method")
 
-@app.route("/weight", methods=['GET', "POST", "PATCH", "DELETE"])
+
+
+# @app.route("/weight/<int:weightLogID>", methods=['DELETE'])
+# @login_required
+# def weight(weightLogID: int):
+#     if request.method == 'DELETE':
+#         with Session(engine) as session:
+#             weight = session.query(WeightLogEntry).get(weightLogID)
+#             session.delete(weight)
+#             session.commit()
+#         return redirect(url_for('weights'))
+#     else:
+#         raise Exception("Invalid request method")
+
+@app.route("/add_weight", methods=['GET', "POST"])
 @login_required
-def weight():
+def add_weight():
     if request.method == 'GET':
         return render_template('add_weight.html')
     if request.method == 'POST':
@@ -198,26 +219,33 @@ def exercises():
     if request.method == 'GET':
         with Session(engine) as session:
             exercises = session.query(ExerciseLogEntry).filter(ExerciseLogEntry.userID==current_user.userID).order_by(ExerciseLogEntry.entryDt.asc()).all()
-            print(current_user.userID)
-            print(len(exercises))
-            headers = ["Date", "Time", "Duration", "Modify", "Delete"]
+            headers = ["Date", "Time", "Duration"]
 
             graphLabels = '[' + ', '.join(["'" + str(m.entryDt) + "'" for m in exercises]) + ']'
-            print(graphLabels)
             graphData = '[' + ', '.join([str(m.durationSeconds) for m in exercises]) + ']'
-            print(graphData)
             rows = [
                 [str(datetime.date(m.entryDt)), str(datetime.time(m.entryDt)), m.durationSeconds] for m in exercises
             ]
-            print(rows)
         return render_template("exercises.html", headers=headers, rows=rows,
                                graphLabels=graphLabels, graphData=graphData)
     else:
         raise Exception("Invalid request method")
 
-@app.route("/exercise", methods=['GET', "POST", "PATCH", "DELETE"])
+# @app.route("/exercise/<int:exerciseLogID>", methods=['DELETE'])
+# @login_required
+# def exercise(exerciseLogID: int):
+#     if request.method == 'DELETE':
+#         with Session(engine) as session:
+#             exercise = session.query(ExerciseLogEntry).get(exerciseLogID)
+#             session.delete(exercise)
+#             session.commit()
+#         return redirect(url_for('exercises'))
+#     else:
+#         raise Exception("Invalid request method")
+
+@app.route("/add_exercise", methods=['GET', "POST"])
 @login_required
-def exercise():
+def add_exercise():
     if request.method == 'GET':
         return render_template('add_exercise.html')
     if request.method == 'POST':
